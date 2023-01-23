@@ -1,7 +1,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
-#include "Vector/Vector.h"
+#include "../Vector/Vector.h"
 #include <set>
 
 template <typename T>

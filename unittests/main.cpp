@@ -1,6 +1,7 @@
-#include "Vector.h"
 #include <string>
-#include "../Graph.h"
+
+#include "../Graph/Graph.h"
+#include "../Vector/Vector.h"
 
 int main()
 {
