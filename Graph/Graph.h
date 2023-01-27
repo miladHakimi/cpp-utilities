@@ -4,6 +4,7 @@
 #include "../Vector/Vector.h"
 #include <set>
 
+namespace utilities {
 template <typename T>
 struct Node
 {
@@ -141,5 +142,7 @@ public:
 private:
     Vector<Node<T> *> nodes_;
 };
+
+} // namespace utilities
 
 #endif // GRAPH_H_
