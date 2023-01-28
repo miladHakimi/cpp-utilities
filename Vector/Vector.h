@@ -1,5 +1,5 @@
-#ifndef VECTOR_VECTOR_H_
-#define VECTOR_VECTOR_H_
+#ifndef VECTOR_H
+#define VECTOR_H
 
 #include <iostream>
 
@@ -77,7 +77,7 @@ class Vector {
   }
 
   // Copy assignment.
-  Vector &operator=(Vector &other) {
+    Vector &operator=(Vector &other) {
     if (this == &other) {
       return *this;
     }
@@ -90,7 +90,15 @@ class Vector {
   }
 
   // Move assignment.
-  Vector& operator=(Vector &&other);
+  Vector operator=(Vector &&other) {
+    if (this == &other) {
+      return *this;
+    }
+    this->size_ = other.size_;
+    this->capacity_ = other.capacity_;
+    this->data_ = other.data_;
+    other.data_ = nullptr;
+  }
 
   T &operator[](int index) { return data_[index]; }
 
@@ -127,6 +135,7 @@ class Vector {
   int size_;
   int capacity_;
 };
+
 }  // namespace utilities
 
-#endif  // VECTOR_VECTOR_H_
+#endif  // VECTOR_H

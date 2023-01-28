@@ -1,5 +1,6 @@
-#include "../Graph/Graph.h"
 #include "../Vector/Vector.h"
+
+#include "../Graph/Graph.h"
 
 #include <string>
 
