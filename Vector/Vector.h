@@ -52,7 +52,45 @@ class Vector {
     data_ = new T[capacity_];
   }
 
-  void Extend(int size);
+  // Copy constructor.
+  Vector(const Vector &other) {
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    data_ = new T[capacity_];
+    for (int i = 0; i < size_; ++i) {
+      data_[i] = other.data_[i];
+    }
+  }
+
+  // Move constructor.
+  Vector(Vector &&other) {
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    data_ = other.data_;
+    other.data_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
+  }
+
+  Vector(std::initializer_list<T> list) {
+    size_ = list.size();
+    capacity_ = size_ + 1;
+    data_ = new T[capacity_];
+    int i = 0;
+    for (auto &item : list) {
+      data_[i++] = item;
+    }
+  }
+
+  void Extend(int size) {
+    T *new_data = new T[size];
+    for (int i = 0; i < size_; ++i) {
+      new_data[i] = data_[i];
+    }
+    delete[] data_;
+    data_ = new_data;
+    capacity_ = size;
+  }
 
   void PushBack(T &value) {
     if (size_ == capacity_) {
@@ -77,7 +115,7 @@ class Vector {
   }
 
   // Copy assignment.
-    Vector &operator=(Vector &other) {
+  Vector &operator=(Vector &other) {
     if (this == &other) {
       return *this;
     }
@@ -98,6 +136,8 @@ class Vector {
     this->capacity_ = other.capacity_;
     this->data_ = other.data_;
     other.data_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
   }
 
   T &operator[](int index) { return data_[index]; }
@@ -105,6 +145,8 @@ class Vector {
   const T &operator[](int index) const { return data_[index]; }
 
   size_t Size() const { return size_; }
+
+  size_t Capacity() const { return capacity_; }
 
   void Clear() {
     for (int i = 0; i < size_; ++i) {
