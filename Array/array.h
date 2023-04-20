@@ -1,17 +1,15 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
+#include <memory>
+
 template<typename T, size_t N>
 class Array {
  public:
-    // using iterator = ArrayIterator<T>;
-    Array() {
-        data_ = new T[N];
-    }
+    Array(): data_(std::make_unique<T[]>(N)) {}
 
     // Copy constructor.
-    Array(const Array &other) {
-        data_ = new T[N];
+    Array(const Array &other):  data_(std::make_unique<T[]>(N)) {
         for (int i = 0; i < N; ++i) {
             data_[i] = other.data_[i];
         }
@@ -19,13 +17,11 @@ class Array {
     
     // Move constructor.
     Array(Array &&other) {
-        data_ = other.data_;
-        other.data_ = nullptr;
+        data_ = std::move(other.data_);
+        assert(other.data_ == nullptr);
     }
 
-    ~Array() {
-        delete[] data_;
-    }
+    ~Array() = default;
     
     size_t Size() const {
         return N;
@@ -40,11 +36,12 @@ class Array {
     }
 
     T* Data() {
-        return data_;
+        return data_.get();
     }
 
     // Copy assignment.
     Array &operator=(const Array &other) {
+        assert(N == other.Size());
         if (this == &other) {
             return *this;
         }
@@ -59,13 +56,13 @@ class Array {
         if (this == &other) {
             return *this;
         }
-        data_ = other.data_;
-        other.data_ = nullptr;
+        data_ = std::move(other.data_);
+        assert(other.data_ == nullptr);
         return *this;
     }
 
  private:
-    T *data_;
+    std::unique_ptr<T[]> data_;
 };
 
 #endif  // ARRAY_H
