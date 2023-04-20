@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../Vector/Vector.h"
+#include "../Vector/vector.h"
 
 namespace utilities {
 namespace {
