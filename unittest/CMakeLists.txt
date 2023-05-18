@@ -1,6 +1,7 @@
 add_executable(
     container_test
     array_tests.cc
+    string_view_tests.cc
     vector_tests.cc
 )
 
@@ -8,6 +9,7 @@ target_link_libraries(
     container_test
     tutorial_compiler_flags
     GTest::gtest_main
+    GTest::gmock
 )
 
 include(GoogleTest)
